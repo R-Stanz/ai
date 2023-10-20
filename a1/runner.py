@@ -1,3 +1,8 @@
 from handler import *
+import pandas as pd
 
-x_coordinates, y_coordinates = get_coordinates()
+coordinates = get_coordinates()
+
+#cities = get_cities()
+
+#cities_table = get_cities_table()

@@ -66,13 +66,14 @@ def get_cities_table(cities):
                         cities[j].name,
                         get_distance(cities[i], cities[j])
                     )
-                    for j in range(i, len(cities))
+                    for j in range(len(cities))
                  )
 
                 for i in range(len(cities))
              ]
 
     cities_df = pd.DataFrame(data, index=[i.name for i in cities])
+    pd.set_option('display.float_format', '{:.4E}'.format)
 
     return cities_df
 

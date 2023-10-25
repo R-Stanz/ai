@@ -116,5 +116,5 @@ class HillClimbing:
 
         inverted_section = section[::-1]
 
-        successor[a_index:b_index+1] = inverted_section[a_index:b_index+1]
+        successor[a_index:b_index+1] = inverted_section
         return successor, self.sequel_cost(successor)

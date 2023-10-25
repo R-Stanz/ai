@@ -1,6 +1,5 @@
 from city import City
 import pandas as pd
-#from hill_clibing import hill_clibing
 
 def get_coordinates(file_name="test.txt"):
 

@@ -1,18 +1,15 @@
 from handler import *
-from hill_climbing import HillClimbing
-
-def sequel_cost(sequel):
-
-    costs = [cities_table.loc[sequel[i], sequel[i+1]] 
-              for i in range(len(sequel)-1)]
-
-    return sum(costs)
+from AStar import AStar
 
 coordinates = get_coordinates()
 
 cities = get_cities(coordinates)
 
 cities_table = get_cities_table(cities)
+
+cities_names = get_city_names(cities)
+
+mst_options = get_mst_options(cities_names, cities_table)
 
 for i in range(1):
 

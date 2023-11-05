@@ -1,5 +1,6 @@
 from handler import *
-from hill_climbing import HillClimbing
+from HillClimbing import HillClimbing
+from DataHandler import Data
 
 coordinates = get_coordinates()
 
@@ -7,43 +8,44 @@ cities = get_cities(coordinates)
 
 cities_table = get_cities_table(cities)
 
-for i in range(1):
+data = Data()
+for i in range(3):
 
-    print("\nInit 1\n")
+    #print("\nInit 1\n")
 
     climb = HillClimbing(cities, cities_table)
-    print(climb)
-    print("\nOperator 1:")
-    print(climb.hill_climb())
+    stats = climb.hill_climb()
+    data.add_data(stats, type=1)
     
     climb = HillClimbing(cities, cities_table)
-    print("\nOperator 2:")
-    print(climb.hill_climb(is_first_oper=False))
+    stats = climb.hill_climb(is_first_oper=False)
+    data.add_data(stats, type=2)
     
     climb = HillClimbing(cities, cities_table)
-    print("\nRandom 1:")
-    print(climb.random_hill_climb())
+    stats = climb.random_hill_climb()
+    data.add_data(stats, type=3)
     
     climb = HillClimbing(cities, cities_table)
-    print("\nRandom 2:")
-    print(climb.random_hill_climb(is_first_oper=False))
+    stats = climb.random_hill_climb(is_first_oper=False)
+    data.add_data(stats, type=4)
 
 
-    print("\n\nInit 2\n")
+    #print("\n\nInit 2\n")
 
     climb = HillClimbing(cities, cities_table, is_init_2=True)
-    print(climb)
-    print("\nOperator 1:")
-    print(climb.hill_climb())
+    stats = climb.hill_climb()
+    data.add_data(stats, type=5)
     
     climb = HillClimbing(cities, cities_table, is_init_2=True)
-    print("\nOperator 2:")
-    print(climb.hill_climb(is_first_oper=False))
+    stats = climb.hill_climb(is_first_oper=False)
+    data.add_data(stats, type=6)
     
     climb = HillClimbing(cities, cities_table, is_init_2=True)
-    print("\nRandom 1:")
-    print(climb.random_hill_climb())
+    stats = climb.random_hill_climb()
+    data.add_data(stats, type=7)
     
     climb = HillClimbing(cities, cities_table, is_init_2=True)
-    print("\nRandom 2:")
-    print(climb.random_hill_climb(is_first_oper=False))
+    stats = climb.random_hill_climb(is_first_oper=False)
+    data.add_data(stats, type=8)
+
+data.basic_plot()

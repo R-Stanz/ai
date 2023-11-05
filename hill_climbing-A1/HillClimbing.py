@@ -62,7 +62,7 @@ class HillClimbing:
                     a_city = -1
                     break
 
-        return self
+        return (len(self.path), self.states_loaded, self.current_cost)
 
     def random_hill_climb(self, is_first_oper=True):
 
@@ -95,7 +95,7 @@ class HillClimbing:
 
                 options = [i for i in all_options]
 
-        return self
+        return (len(self.path), self.states_loaded, self.current_cost)
 
     def successor_1(self, a_index, b_index):
 

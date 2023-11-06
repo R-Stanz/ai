@@ -17,11 +17,11 @@ for i in range(30):
     
     climb = HillClimbing(cities, cities_table)
     stats = climb.hill_climb(is_first_oper=False)
-    data.add_data(stats, type=2)
+    data.add_data(stats, type=3)
     
     climb = HillClimbing(cities, cities_table)
     stats = climb.random_hill_climb()
-    data.add_data(stats, type=3)
+    data.add_data(stats, type=2)
     
     climb = HillClimbing(cities, cities_table)
     stats = climb.random_hill_climb(is_first_oper=False)
@@ -34,11 +34,11 @@ for i in range(30):
     
     climb = HillClimbing(cities, cities_table, is_init_2=True)
     stats = climb.hill_climb(is_first_oper=False)
-    data.add_data(stats, type=6)
+    data.add_data(stats, type=7)
     
     climb = HillClimbing(cities, cities_table, is_init_2=True)
     stats = climb.random_hill_climb()
-    data.add_data(stats, type=7)
+    data.add_data(stats, type=6)
     
     climb = HillClimbing(cities, cities_table, is_init_2=True)
     stats = climb.random_hill_climb(is_first_oper=False)

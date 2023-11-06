@@ -9,9 +9,7 @@ cities = get_cities(coordinates)
 cities_table = get_cities_table(cities)
 
 data = Data()
-for i in range(3):
-
-    #print("\nInit 1\n")
+for i in range(30):
 
     climb = HillClimbing(cities, cities_table)
     stats = climb.hill_climb()
@@ -30,8 +28,6 @@ for i in range(3):
     data.add_data(stats, type=4)
 
 
-    #print("\n\nInit 2\n")
-
     climb = HillClimbing(cities, cities_table, is_init_2=True)
     stats = climb.hill_climb()
     data.add_data(stats, type=5)
@@ -49,3 +45,8 @@ for i in range(3):
     data.add_data(stats, type=8)
 
 data.basic_plot()
+
+msg  = data.get_avg_path_size()
+msg += data.get_avg_loaded()
+msg += data.get_avg_final_cost()
+print(msg)

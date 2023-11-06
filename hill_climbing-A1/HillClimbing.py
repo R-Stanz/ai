@@ -25,6 +25,8 @@ class HillClimbing:
         costs = [self.costs_table.loc[sequel[i], sequel[i+1]] 
                   for i in range(len(sequel)-1)]
 
+        costs += [self.costs_table.loc[sequel[0], sequel[-1]]]
+
         return sum(costs)
 
 
@@ -96,6 +98,7 @@ class HillClimbing:
                 options = [i for i in all_options]
 
         return (len(self.path), self.states_loaded, self.current_cost)
+
 
     def successor_1(self, a_index, b_index):
 

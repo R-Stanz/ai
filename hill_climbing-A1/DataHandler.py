@@ -1,5 +1,5 @@
+import numpy as np
 import matplotlib.pyplot as plt
-from threading import Thread
 
 class Data:
 
@@ -18,40 +18,99 @@ class Data:
         type_visited_totals += [visited_total]
         type_costs          += [cost]
 
-    def plot(self, type_number):
+    def basic_plot(self):
 
         for type_number in range(len(self.all_types_data)):
 
             number_of_categories = len(self.all_types_data[type_number])
-            fig, axs = plt.subplots(number_of_categories)
-
-            fig.suptitle("General Infos About The Iterations")
-
             for category_number in range(number_of_categories):
 
-                plot_index_a = type_number
-                plot_index_b = category_number
+                fig, ax = plt.subplots()
+
+                fig.suptitle("General Infos About The Iterations")
 
                 data_by_type            = self.all_types_data[type_number]
                 data_by_type_category   = data_by_type[category_number]
                 iterations_numbers      = [i for i in range(len(data_by_type_category))]
 
-                axs[plot_index_a, plot_index_b].plot(iterations_numbers, data_by_type_category)
+                proportions, labels = self.get_proportions(data_by_type_category)
+                ax.pie(proportions, labels=labels, autopct='%1.4f%%',
+                       pctdistance=1.25, labeldistance=.6)
 
                 category_name = self.get_category_name(category_number)
                 msg = "Variation " + str(type_number+1) + ": " + category_name
 
-                axs[plot_index_a, plot_index_b].set_title(msg)
+                ax.set_title(msg)
 
-            plt.show()
+                plt.show()
 
     def get_category_name(self, category_number):
 
-                if(category_number == 0):
-                    return "Path Size"
-                elif(category_number == 1):
-                    return "Total Of Visited States"
-                elif(category_number == 2):
-                    return "Final Cost"
-                else:
-                    raise IndexError("Getting More Than 3 Categoriesa.")
+        if(category_number == 0):
+            return "Path Size"
+        elif(category_number == 1):
+            return "Total Of Visited States"
+        elif(category_number == 2):
+            return "Final Cost"
+        else:
+            raise IndexError("Getting More Than 3 Categoriesa.")
+
+
+    def get_proportions(self, data):
+        proportions = []
+        labels      = []
+
+        for i in data:
+            i_formated = '%.2f'%(i)
+            if (i_formated not in labels):
+                labels      += [i_formated]
+                proportions += [data.count(i)/len(data)]
+
+        return proportions, labels
+
+    def get_avg_path_size(self):
+
+        msg = "\n"
+
+        i = 0
+        avg_arr = []
+        for variation in self.all_types_data:
+            i += 1
+            variation_avg = np.mean(variation[0])
+            avg_arr += [variation_avg] 
+            msg += "\nVariation " + str(i) + " Average Path Size: " + '%.4f'%(variation_avg)
+
+        msg += "\n\n\t=>Overall Path Size Average: " + '%.4f'%(np.mean(avg_arr))
+        return msg
+
+
+    def get_avg_loaded(self):
+
+        msg = "\n"
+
+        i = 0
+        avg_arr = []
+        for variation in self.all_types_data:
+            i += 1
+            variation_avg = np.mean(variation[1])
+            avg_arr += [variation_avg] 
+            msg += "\nVariation " + str(i) + " Average Number Of Visited Configurations: " + '%.4f'%(variation_avg)
+
+        msg += "\n\n\t=>Overall Average Number Of Visited Configurations Average: " + '%.4f'%(np.mean(avg_arr))
+        return msg
+
+
+    def get_avg_final_cost(self):
+
+        msg = "\n"
+
+        i = 0
+        avg_arr = []
+        for variation in self.all_types_data:
+            i += 1
+            variation_avg = np.mean(variation[2])
+            avg_arr += [variation_avg] 
+            msg += "\nVariation " + str(i) + " Average Final Cost: " + '%.4f'%(variation_avg)
+
+        msg += "\n\n\t=>Overall Average Final Cost: " + '%.4f'%(np.mean(avg_arr))
+        return msg

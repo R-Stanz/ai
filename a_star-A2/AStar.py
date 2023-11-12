@@ -2,22 +2,27 @@ import random as rnd
 from Node import Node
 
 class AStar:
-    def __init__(self, cities, cost_table, mst_options):
+    def __init__(self, cities, cost_table):
 
         self.cities         = cities
-        self.first_city     = cities[0]
         self.cost_table     = cost_table
-        self.mst_options    = mst_options
 
-
-    nodes = []
     def run(self):
-        cities_order = rnd.sample(cities, len(cities))
 
-        self.nodes  = [Node(cities)]
-        next_nodes  = self.nodes[0].get_children()
-        self.nodes += []
-        
-        node = nodes.pop(0)
+        first_node   = Node(self.cities, self.cities[0], self.cost_table)
+        self.nodes   = [first_node]
+        current_node = None
 
-    def mst(self, path):
+        while (current_node != first_node):
+
+            if (len(nodes) = 0):
+                self.nodes = [Node(cities)]
+
+            current_node     = self.nodes.pop(0)
+            new_nodes        = current_node.get_children()
+
+            if (len(new_nodes) == 0):
+                new_nodes += [first_node]
+
+            self.nodes      += new_nodes
+            self.nodes.sort(key=lambda node: node.get_path_cost() + node.get_mst(first_node))

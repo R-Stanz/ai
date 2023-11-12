@@ -1,5 +1,5 @@
 from handler import *
-from AStar import AStar
+from Node import Node
 
 coordinates = get_coordinates()
 
@@ -7,47 +7,22 @@ cities = get_cities(coordinates)
 
 cities_table = get_cities_table(cities)
 
-cities_names = get_city_names(cities)
+cities_names = get_cities_names(cities)
 
-mst_options = get_mst_options(cities_names, cities_table)
+first_node  = Node(cities_names, cities_names[0], cities_table)
+nodes       = [first_node]
+current_node = None
 
-for i in range(1):
+while (current_node != first_node):
 
-    print("\nInit 1\n")
+    if (len(nodes) == 0):
+        nodes = [Node(cities)]
 
-    climb = HillClimbing(cities, cities_table)
-    print(climb)
-    print("\nOperator 1:")
-    print(climb.hill_climb())
-    
-    climb = HillClimbing(cities, cities_table)
-    print("\nOperator 2:")
-    print(climb.hill_climb(is_first_oper=False))
-    
-    climb = HillClimbing(cities, cities_table)
-    print("\nRandom 1:")
-    print(climb.random_hill_climb())
-    
-    climb = HillClimbing(cities, cities_table)
-    print("\nRandom 2:")
-    print(climb.random_hill_climb(is_first_oper=False))
+    current_node     = nodes.pop(0)
+    new_nodes        = current_node.get_children()
 
+    if (len(new_nodes) == 0):
+        new_nodes += [first_node]
 
-    print("\n\nInit 2\n")
-
-    climb = HillClimbing(cities, cities_table, is_init_2=True)
-    print(climb)
-    print("\nOperator 1:")
-    print(climb.hill_climb())
-    
-    climb = HillClimbing(cities, cities_table, is_init_2=True)
-    print("\nOperator 2:")
-    print(climb.hill_climb(is_first_oper=False))
-    
-    climb = HillClimbing(cities, cities_table, is_init_2=True)
-    print("\nRandom 1:")
-    print(climb.random_hill_climb())
-    
-    climb = HillClimbing(cities, cities_table, is_init_2=True)
-    print("\nRandom 2:")
-    print(climb.random_hill_climb(is_first_oper=False))
+    nodes      += new_nodes
+    nodes.sort(key=lambda node: node.get_path_cost() + node.get_mst(first_node))

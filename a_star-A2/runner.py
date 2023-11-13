@@ -1,5 +1,4 @@
 from handler import *
-from Node import Node
 
 coordinates = get_coordinates()
 
@@ -9,20 +8,26 @@ cities_table = get_cities_table(cities)
 
 cities_names = get_cities_names(cities)
 
-first_node  = Node(cities_names, cities_names[0], cities_table)
-nodes       = [first_node]
-current_node = None
+print("Default MST (Including First City): \n")
+for city in cities_names:
 
-while (current_node != first_node):
+    print("First City As ", city)
 
-    if (len(nodes) == 0):
-        nodes = [Node(cities)]
+    result = a_star(cities_names, cities_table, city)
+    last_state, max_queue_len, last_queue_len, steps_count = result 
 
-    current_node     = nodes.pop(0)
-    new_nodes        = current_node.get_children()
+    print(last_state)
+    print(f"Max Size Queue Of States: {max_queue_len:.4E}" \
+            f"\tLast Size Queue Of State: {last_queue_len:.4E}")
 
-    if (len(new_nodes) == 0):
-        new_nodes += [first_node]
+print("\n\nModified MST (Not Including First City): \n")
+for city in cities_names:
 
-    nodes      += new_nodes
-    nodes.sort(key=lambda node: node.get_path_cost() + node.get_mst(first_node))
+    print("First City As ", city)
+
+    result = a_star(cities_names, cities_table, city, with_default_mst=False)
+    last_state, max_queue_len, last_queue_len, steps_count = result 
+
+    print(last_state)
+    print(f"Max Size Queues Of States: {max_queue_len:.4E}" \
+            f"\tLast Size Queue Of State: {last_queue_len:.4E}")

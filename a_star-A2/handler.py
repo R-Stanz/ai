@@ -1,5 +1,6 @@
 from city import City
 import pandas as pd
+from Node import Node
 
 def get_coordinates(file_name="test.txt"):
 
@@ -87,3 +88,33 @@ def get_distance(city_1, city_2):
 
 def get_cities_names(cities):
     return [city.name for city in cities]
+
+
+def a_star(cities, cost_table, first_city, with_default_mst=True):
+
+    first_node      = Node(cities, first_city, cost_table)
+    nodes           = [first_node]
+    current_node    = None
+    nodes_max_len   = 0
+
+    steps_count = 0
+    while True:
+
+        current_node     = nodes.pop(0)
+        new_nodes        = current_node.get_children()
+
+        if(nodes_max_len < len(nodes)):
+            nodes_max_len = len(nodes)
+
+        if ((new_nodes == []) and (steps_count > 0)):
+            new_nodes = [Node(cities, first_city, cost_table, current_node)]
+
+        if ((current_node.node_city == first_node.node_city) and (steps_count > 0)):
+            break
+
+        nodes += new_nodes
+        nodes.sort(key=lambda node: node.get_path_cost() + node.get_mst(first_node, with_default_mst))
+
+        steps_count += 1
+
+    return current_node, nodes_max_len, len(nodes), steps_count
